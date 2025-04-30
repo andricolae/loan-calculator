@@ -1,1 +1,75 @@
-<p>home works!</p>
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+  <div class="container mx-auto px-4 py-12 flex-grow flex flex-col md:flex-row items-center justify-center">
+    <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Calculate Your Loan Payments with Ease</h1>
+      <p class="text-lg text-gray-700 mb-8">
+        Our powerful calculator helps you plan your finances by estimating your monthly payments, total interest, and amortization schedule. Save your simulations and access them anytime.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a
+          routerLink="/calculator"
+          class="bg-blue-600 text-white py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg inline-block text-center"
+        >
+            Start a New Calculation
+        </a>
+        <a
+          routerLink="/simulations"
+          class="bg-white text-blue-600 py-3 px-8 rounded-lg border border-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block text-center"
+        >
+          View Saved Simulations
+        </a>
+      </div>
+    </div>
+    <div class="md:w-1/2">
+      <div class="bg-white p-6 rounded-xl shadow-xl">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Features</h2>
+        <ul class="space-y-4">
+          <li class="flex items-start">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mr-3 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-gray-800">Multiple Loan Types</strong>
+              <p class="text-gray-600">Support for simple loans, compound loans, and leasing calculations</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mr-3 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-gray-800">Detailed Amortization Schedule</strong>
+              <p class="text-gray-600">See how your payments break down month by month</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mr-3 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-gray-800">Save Your Simulations</strong>
+              <p class="text-gray-600">Save and compare different loan scenarios</p>
+            </div>
+          </li>
+          <li class="flex items-start">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mr-3 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <strong class="text-gray-800">Works Offline</strong>
+              <p class="text-gray-600">Install as a PWA and use even without internet connection</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
