@@ -44,7 +44,6 @@ export class CalculatorComponent {
   }
 
   calculateLoan(): void {
-    console.log("calculate loan method called!");
     if (this.calculatorForm.invalid) {
       Object.keys(this.calculatorForm.controls).forEach(field => {
         const control = this.calculatorForm.get(field);
