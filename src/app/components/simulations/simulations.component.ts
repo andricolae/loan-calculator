@@ -1,30 +1,44 @@
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoanSimulation, LoanType } from '../../models/loan.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LoanService } from '../../services/loan.service';
+import { DialogService } from '../../services/dialog.service';
+import { NotificationService } from '../../services/notification.service';
+import { LoanSimulation, LoanType, PaymentFrequency } from '../../models/loan.model';
 
 @Component({
   selector: 'app-simulations',
-  imports: [DatePipe, CurrencyPipe, CommonModule],
+  standalone: true,
+  imports: [CommonModule, DatePipe],
   templateUrl: './simulations.component.html',
   styleUrl: './simulations.component.css'
 })
-export class SimulationsComponent {
+export class SimulationsComponent implements OnInit, OnDestroy {
   simulations: LoanSimulation[] = [];
+  private subscription: Subscription | null = null;
 
-  constructor(private loanService: LoanService, private router: Router) {}
+  constructor(
+    private loanService: LoanService,
+    private router: Router,
+    private dialogService: DialogService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
-    this.loanService.getSimulations().subscribe(simulations => {
-      this.simulations = simulations.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      });
-    });
+    this.subscription = this.loanService.getSimulations().subscribe(
+      simulations => {
+        this.simulations = [...simulations].sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+      }
+    );
   }
 
-  navigateToCalculator(): void {
-    this.router.navigate(['/calculator']);
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getLoanTypeName(type: LoanType): string {
@@ -40,10 +54,46 @@ export class SimulationsComponent {
     }
   }
 
-  deleteSimulation(id: string, event: Event): void {
-    event.stopPropagation();
-    if (confirm('Are you sure you want to delete this simulation?')) {
-      this.loanService.deleteSimulation(id);
+  getPaymentFrequencyName(frequency: PaymentFrequency): string {
+    switch (frequency) {
+      case PaymentFrequency.MONTHLY:
+        return 'Monthly';
+      case PaymentFrequency.WEEKLY:
+        return 'Weekly';
+      default:
+        return 'Unknown';
     }
+  }
+
+  viewSimulation(id: string): void {
+    this.router.navigate(['/result', id]);
+  }
+
+  deleteSimulation(simulation: LoanSimulation, event: Event): void {
+    event.stopPropagation();
+
+    this.dialogService.confirm({
+      title: 'Delete Simulation',
+      message: `Are you sure you want to delete "${simulation.name}"? This action cannot be undone.`,
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      showCancel: true,
+      confirmClass: 'bg-red-600 hover:bg-red-700 text-white'
+    }).subscribe({
+      next: (confirmed) => {
+        if (confirmed) {
+          this.loanService.deleteSimulation(simulation.id);
+          this.notificationService.success(`"${simulation.name}" deleted successfully`);
+        }
+      }
+    });
+  }
+
+  createNewSimulation(): void {
+    this.router.navigate(['/calculator']);
+  }
+
+  getFormattedAmount(amount: number): string {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   }
 }
