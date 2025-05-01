@@ -46,7 +46,6 @@
           Principal amount is required and must be positive
         </div>
       }
-
     </div>
 
     <div class="form-group">
@@ -106,6 +105,17 @@
         placeholder="0"
         min="0"
       >
+      @if (calculatorForm.get('downPayment')?.invalid && calculatorForm.get('downPayment')?.touched) {
+        <div class="text-red-500 text-xs mt-1">
+          @if (calculatorForm.get('downPayment')?.errors?.['min']) {
+            Down payment must be non-negative
+          } @else if (calculatorForm.get('downPayment')?.errors?.['exceedsPrincipal']) {
+            Down payment cannot exceed principal amount
+          } @else {
+            Down payment is invalid
+          }
+        </div>
+      }
     </div>
 
     @if (calculatorForm.get('type')?.value === LoanType.LEASING) {
@@ -119,6 +129,11 @@
           placeholder="0"
           min="0"
         >
+        @if (calculatorForm.get('residualValue')?.invalid && calculatorForm.get('residualValue')?.touched) {
+          <div class="text-red-500 text-xs mt-1">
+            Residual value is required for leasing and must be non-negative
+          </div>
+        }
       </div>
     }
 
@@ -132,6 +147,11 @@
         placeholder="0"
         min="0"
       >
+      @if (calculatorForm.get('balloonPayment')?.invalid && calculatorForm.get('balloonPayment')?.touched) {
+        <div class="text-red-500 text-xs mt-1">
+          Balloon payment must be non-negative
+        </div>
+      }
     </div>
 
     <button
@@ -141,6 +161,5 @@
     >
       Calculate
     </button>
-
   </form>
 </div>
