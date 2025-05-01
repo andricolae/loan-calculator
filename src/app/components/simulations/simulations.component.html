@@ -1,1 +1,80 @@
-<p>simulations works!</p>
+<div class="max-w-4xl mx-auto p-4">
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">My Simulations</h2>
+      <a
+        href="/calculator"
+        class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block text-center"
+      >
+        New Simulation
+      </a>
+    </div>
+
+    @if (simulations.length === 0) {
+      <div class="text-center py-8">
+        <p class="text-gray-600 mb-4">You don't have any saved simulations yet.</p>
+        <a
+          href="/calculator"
+          class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block text-center"
+        >
+          Create Your First Simulation
+        </a>
+      </div>
+    }
+
+    @if (simulations.length > 0) {
+      <div class="space-y-4">
+        @for (simulation of simulations; track simulation.id) {
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <h3 class="font-semibold text-lg">{{ simulation.name }}</h3>
+              <span class="text-sm text-gray-500">{{ simulation.createdAt | date:'medium' }}</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Type</span>
+                <span>{{ getLoanTypeName(simulation.type) }}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Principal</span>
+                <span>{{ simulation.principal | currency }}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Term</span>
+                <span>{{ simulation.term }} months</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Interest Rate</span>
+                <span>{{ simulation.interestRate }}%</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Monthly Payment</span>
+                <span class="font-semibold">{{ simulation.monthlyPayment | currency }}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-gray-600 text-sm">Total Interest</span>
+                <span>{{ simulation.totalInterest | currency }}</span>
+              </div>
+            </div>
+
+            <div class="mt-4 flex justify-end space-x-3">
+              <a
+                [href]="'/result/' + simulation.id"
+                class="bg-blue-100 text-blue-600 py-1 px-3 rounded hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block text-center"
+              >
+                View Details
+              </a>
+              <button
+                (click)="deleteSimulation(simulation.id, $event)"
+                class="bg-red-100 text-red-600 py-1 px-3 rounded hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
